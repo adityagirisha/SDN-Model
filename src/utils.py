@@ -20,12 +20,14 @@ def read_csv(target_name, normalize=False):
 #           levels=None, names=None, verify_integrity=False, copy=True)
 #     df.to_csv(r'data/merged.csv', index = False)
     df=pd.read_csv("data/merged.csv", names=colnames,dtype={'Source IP':str,'Destination IP':str})
+    df = df.iloc[1:]
+    print(df) 
     if list(df.columns.values).count(target_name) != 1: 
         print("No target Label Found!")
         return
     df = df[[ 'Source IP',  'Source Port',  'Destination IP',  'Destination Port',  'Protocol'
              ,  'Flow Duration' ,'Average Packet Size', 'Label']]
-    df = shuffle(df)
+#     df = shuffle(df)
     columnsToEncode = list(df.select_dtypes(include=['category', 'object']))  
     le = preprocessing.LabelEncoder()
     for feature in columnsToEncode:
@@ -34,9 +36,10 @@ def read_csv(target_name, normalize=False):
             df[feature] = le.fit_transform(df[feature])
         except Exception as e:
             print ('error:'+ feature)
-            
+      
     target2idx = {target: idx for idx, target in enumerate(sorted(list(set(df[target_name].values))))}
     X = df.drop([target_name], axis=1).values
+    
     y = np.vectorize(lambda x: target2idx[x])(df[target_name].values)
     n_classes = len(target2idx.keys())
     if X.shape[0] != y.shape[0]:
