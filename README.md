@@ -30,7 +30,7 @@ $$ Sd(x) = {\frac {1}{1+e^{-x}}}* (1- {\frac {1}{1+e^{-x}}}) $$
 
 
 
-####Requirements
+#### Requirements
 + python3
 + conda
 + numpy
