@@ -60,3 +60,32 @@ To run the the demo or training code run :
 `$ jupyter nbconvert --to python *.ipynb`
 `$ python3 *.py`
 where `*.ipynb` is the file to be executed.
+
+
+#### Code Snippets to use the network:
+
+	#settings for network
+	hidden_layers = [5] 
+	eta = 0.1 
+	n_epochs = 800
+	n_folds = 3 
+	seed_crossval = 666 
+	seed_weights = 1
+	
+	#Intialize a new network
+	model = NeuralNet(input_dim=d, output_dim=n_classes,
+               hidden_layers=hidden_layers, seed=seed_weights)
+			   
+	#train a network on given data set
+	model.train(X_train, y_train, eta=eta, n_epochs=n_epochs)
+	
+	#store a trained network
+	utils.storeNN(i,model.getNetworkDetails())
+	
+	#retrive trained network
+	x=utils.loadNN(i)
+	model.setNetworkDetails(x)
+	
+	#predict for a data instance
+	ypred_train = model.predict(X_train)
+	
