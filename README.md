@@ -1,23 +1,23 @@
 #### Project Type : Minor Project
 #### Project Title : Leveraging Software Defined Networks to mitigate      DDoS Attacks
 
-####Team Members:
+#### Team Members:
 + Abhilash Jaysheel (01FB16ECS009)
 + Abhimanyu Roy (01FB16ECS010)
 + Aditya Girisha (01FB16ECS027)
 
-####Project Guide: Prof Suganthi
+#### Project Guide: Prof Suganthi
 
-##Project Abstract:
+## Project Abstract:
 
 Software-defined networking (SDN) is a new network architecture that has been proven to enhance network performance and reliability. SDN networks promote logically centralized control of network switches and ro
 uters in an SDN environment by separating network behaviour and network functionality.
 
 The Aim our project is to leverage this capability by detecting signatures that indicate traces of a DDoS attack and dynamically set flow rules that prevent forwarding of these packets.By dropping these black packets we can keep server utility to a minimum even during the event of a DDoS attack making it available for processing genuine user requests.
 
-###Code Execution
+### Code Execution
 
-####ML Classifier
+#### ML Classifier
 The ML Classifier is a numpy-based python prototype of an feed-forward artificial neural network developed for integration with the RyuSDn network.
 
 The feedforward network is accomanied by a back-propagation for efficient learning and k-fold cross-validation for confirming accuracy.
