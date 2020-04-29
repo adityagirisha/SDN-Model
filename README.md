@@ -38,16 +38,17 @@ $$ Sd(x) = {\frac {1}{1+e^{-x}}}* (1- {\frac {1}{1+e^{-x}}}) $$
 + pickle
 + sklearn
 
-######Install python3:
+###### Install python3:
 ` $ sudo apt-get install python3.6`
-######Install conda:
+
+###### Install conda:
 `$ wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh`
 
 `$ bash Anaconda3-2020.02-Linux-x86.sh`
-######Install python requirements
+###### Install python requirements
 `$  pip install -r requirements.txt`
 
-####Execution
+#### Execution
 + The classifier  implementation can be found under `ML/src/NN.py`
 + The training of the classfier can found under `ML/main.ipynb`
 + The trained classifier can be tested under `ML/demo.ipynb`
