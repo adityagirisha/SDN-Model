@@ -7,10 +7,10 @@ import pickle
 
 
 def read_csv(target_name, normalize=False):
-    colnames = [ 'Source IP',  'Source Port',  'Destination IP',  'Destination Port',  'Protocol'
-             , 'Timestamp',  'Flow Duration',  'Total Fwd Packets',  'Total Backward Packets', 
-             'Total Length of Fwd Packets', 'Total Length of Bwd Packets', 'Flow Packets/s', 'Fwd Packets/s',  
-             'Bwd Packets/s',  'Average Packet Size',  'Fwd Header Length.1',  'Label']
+#     colnames = [ 'Source IP',  'Source Port',  'Destination IP',  'Destination Port',  'Protocol'
+#              , 'Timestamp',  'Flow Duration',  'Total Fwd Packets',  'Total Backward Packets', 
+#              'Total Length of Fwd Packets', 'Total Length of Bwd Packets', 'Flow Packets/s', 'Fwd Packets/s',  
+#              'Bwd Packets/s',  'Average Packet Size',  'Fwd Header Length.1',  'Label']
 #     data11=pd.read_csv("data/day1/syn11.csv", names=colnames,dtype={'Source IP':str,'Destination IP':str})
 #     data12=pd.read_csv("data/day1/syn12.csv", names=colnames,dtype={'Source IP':str,'Destination IP':str})
 #     data11 = data11.iloc[1:]
@@ -19,15 +19,15 @@ def read_csv(target_name, normalize=False):
 #     df = pd.concat(frames, axis=0, join='outer', ignore_index=False, keys=None,
 #           levels=None, names=None, verify_integrity=False, copy=True)
 #     df.to_csv(r'data/merged.csv', index = False)
-    df=pd.read_csv("data/merged.csv", names=colnames,dtype={'Source IP':str,'Destination IP':str})
+    colnames=['flow_packet_count','flow_byte_count','rx_packets','tx_packets','rx_bytes','tx_bytes','Label']
+    df=pd.read_csv("final.csv", names=colnames)
     df = df.iloc[1:]
-    print(df) 
+
     if list(df.columns.values).count(target_name) != 1: 
         print("No target Label Found!")
         return
-    df = df[[ 'Source IP',  'Source Port',  'Destination IP',  'Destination Port',  'Protocol'
-             ,  'Flow Duration' ,'Average Packet Size', 'Label']]
-#     df = shuffle(df)
+
+    df = shuffle(df)
     columnsToEncode = list(df.select_dtypes(include=['category', 'object']))  
     le = preprocessing.LabelEncoder()
     for feature in columnsToEncode:
