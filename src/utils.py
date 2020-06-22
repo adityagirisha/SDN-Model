@@ -7,45 +7,22 @@ import pickle
 
 
 def read_csv(target_name, normalize=False):
-#     colnames = [ 'Source IP',  'Source Port',  'Destination IP',  'Destination Port',  'Protocol'
-#              , 'Timestamp',  'Flow Duration',  'Total Fwd Packets',  'Total Backward Packets', 
-#              'Total Length of Fwd Packets', 'Total Length of Bwd Packets', 'Flow Packets/s', 'Fwd Packets/s',  
-#              'Bwd Packets/s',  'Average Packet Size',  'Fwd Header Length.1',  'Label']
-#     data11=pd.read_csv("data/day1/syn11.csv", names=colnames,dtype={'Source IP':str,'Destination IP':str})
-#     data12=pd.read_csv("data/day1/syn12.csv", names=colnames,dtype={'Source IP':str,'Destination IP':str})
-#     data11 = data11.iloc[1:]
-#     data12 = data12.iloc[1:]
-#     frames=[data11,data12]
-#     df = pd.concat(frames, axis=0, join='outer', ignore_index=False, keys=None,
-#           levels=None, names=None, verify_integrity=False, copy=True)
-#     df.to_csv(r'data/merged.csv', index = False)
+
     colnames=['flow_packet_count','flow_byte_count','rx_packets','tx_packets','rx_bytes','tx_bytes','Label']
     df=pd.read_csv("final.csv", names=colnames)
     df = df.iloc[1:]
-
+    df = shuffle(df)
     if list(df.columns.values).count(target_name) != 1: 
         print("No target Label Found!")
         return
-
-    df = shuffle(df)
-    columnsToEncode = list(df.select_dtypes(include=['category', 'object']))  
-    le = preprocessing.LabelEncoder()
-    for feature in columnsToEncode:
-        try:
-            df[feature]=df[feature].astype(str)
-            df[feature] = le.fit_transform(df[feature])
-        except Exception as e:
-            print ('error:'+ feature)
-      
     target2idx = {target: idx for idx, target in enumerate(sorted(list(set(df[target_name].values))))}
-    X = df.drop([target_name], axis=1).values
-    
     y = np.vectorize(lambda x: target2idx[x])(df[target_name].values)
-    n_classes = len(target2idx.keys())
+    df = df.drop([target_name], axis=1).values
+    X=preprocessing.normalize(df)
+    n_classes = 2
     if X.shape[0] != y.shape[0]:
         raise Exception("X.shape = {} and y.shape = {} are inconsistent!".format(X.shape, y.shape))
-    if normalize:
-        X = (X - X.mean(axis=0)) / X.std(axis=0)
+    
     return X, y, n_classes
 
 def storeNN(i,payload):
